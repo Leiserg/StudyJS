@@ -14,11 +14,11 @@ let period = 6;
 
 
 let start = function() {
-    money = prompt('Ваш месячный доход?');
-
-    while (!isNumber(money)) {
+   
+    do{
         money = prompt('Ваш месячный доход?');
     }
+    while (!isNumber(money));
 };
 
 start();
@@ -55,7 +55,6 @@ let getExpensesMonth = function() {
         }
 
         sum += +prompt('Во сколько это обойдется?');
-
         while (!isNumber(sum)) {
             sum = prompt('Во сколько это обойдется?');
         }
@@ -65,7 +64,6 @@ let getExpensesMonth = function() {
 };
 
 let expensesAmont = getExpensesMonth();
-
 console.log('Расходы за месяц: ', expensesAmont);
 
 
@@ -105,4 +103,3 @@ let getStatusIncome = function() {
 };
 
 getStatusIncome();
-
