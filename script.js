@@ -14,7 +14,7 @@ function game() {
             alert('Введите число!');
             action();
         }else if (Boolean(guessNumber) === false) {
-            return alert('Игра окончена');
+            alert('Игра окончена');
         }else if (guessNumber === hiddenNumber) {
             alert('Вы угадали');
         }else if (guessNumber > hiddenNumber) {
