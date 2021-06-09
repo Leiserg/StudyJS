@@ -1,68 +1,57 @@
 'use strict';
 
-let money = +prompt('Ваш месячный доход?', '50000');
-let income = 'Подработка';
-let addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую', 'Квартплата, кредит'); 
-let deposit = confirm('Есть ли у вас депозит в банке?');
-let mission = 300000; 
-let period = 6;
 
-let showTypeOf = function(data) {
-    console.log(data, typeof(data));
-};
+let calculate = document.getElementById('start');
 
-showTypeOf(money);
-showTypeOf(income);
-showTypeOf(deposit);
+let sum1 = document.getElementsByTagName('button')[0];
+let sum2 = document.getElementsByTagName('button')[1];
 
+let checkbox = document.querySelector('#deposit-check');
 
-// console.log(addExpenses.length);
-// console.log('Период равен', (period), 'месяцев');
-// console.log('Цель заработать', (mission), 'рублей');
-// console.log(addExpenses.toLowerCase());
+let additionalIncome1 = document.querySelectorAll('.additional_income-item')[0];
+let additionalIncome2 = document.querySelectorAll('.additional_income-item')[1];
 
-let arr = addExpenses.split(', ');
-console.log(arr);
+let budgetonth = document.getElementsByClassName('result-total budget_month-value')[0];
+let budgetDay = document.getElementsByClassName('result-total budget_day-value')[0];
+let expensesMonth = document.getElementsByClassName('result-total expenses_month-value')[0];
+let additionalIncome = document.getElementsByClassName('result-total additional_income-value')[0];
+let additionalExpensesResult = document.getElementsByClassName('result-total additional_expenses-value')[0];
+let incomePeriod = document.getElementsByClassName('result-total income_period-value')[0];
+let targetMonth = document.getElementsByClassName('result-total target_month-value')[0];
 
-let expenses1 = prompt('Введите обязательную статью расходов?', 'Квартплата');
-let amount1 = +prompt('Во сколько это обойдется?', '5000');
-let expenses2 = prompt('Введите обязательную статью расходов?', 'Кредит');
-let amount2 = +prompt('Во сколько это обойдется?', '10000');
-
-
-let getExpensesMonth = function() {
-    return amount1 + amount2;
-};
-console.log('Расходы за месяц: ', getExpensesMonth());
+let salaryAmount = document.querySelector('.salary-amount');
+let incomeTitle = document.querySelector('.income-title');
+let incomeAmount = document.querySelector('.income-amount');
+let expensesTitle = document.querySelector('.expenses-title');
+let expensesAmount = document.querySelector('.expenses-amount');
+let additionalExpenses = document.querySelector('.additional_expenses');
+let depositAmount = document.querySelector('.deposit-amount');
+let depositPercent = document.querySelector('.deposit-percent');
+let targetAmount = document.querySelector('.target-amount');
+let periodSelect = document.querySelector('.period-select');
 
 
-function getAccumulatedMonth() {
-    return money - getExpensesMonth();
-}
-let accumulatedMonth = getAccumulatedMonth();
+console.log(calculate);
+console.log(sum1); 
+console.log(sum2);
+console.log(checkbox); 
+console.log(additionalIncome1);
+console.log(additionalIncome2);
+console.log(budgetonth);
+console.log(budgetDay);
+console.log(expensesMonth);
+console.log(additionalIncome);
+console.log(additionalExpensesResult);
+console.log(incomePeriod);
+console.log(targetMonth);
 
-
-function getTargetMonth() {
-    return mission / accumulatedMonth;
-}
-console.log('Цель будет достигнута за', Math.ceil(getTargetMonth()), 'месяцев(-a)');
-
-
-let budgetDay = accumulatedMonth / 30;
-console.log('Бюджет на день', Math.floor(budgetDay));
-
-
-let getStatusIncome = function() {
-    if(budgetDay > 1200) {
-        console.log('У вас высокий уровень дохода');
-    } else if(budgetDay >= 600 && budgetDay <= 1200) {
-        console.log('У вас средний уровень дохода');
-    } else if(budgetDay > 0 && budgetDay > 600) {
-        console.log('К сожалению у вас уровень дохода ниже среднего');
-    }else {
-        console.log('Что-то пошло не так');
-    }
-};
-
-getStatusIncome();
-
+console.log(salaryAmount);
+console.log(incomeTitle);
+console.log(incomeAmount);
+console.log(expensesTitle);
+console.log(expensesAmount);
+console.log(additionalExpenses);
+console.log(depositAmount);
+console.log(depositPercent);
+console.log(targetAmount);
+console.log(periodSelect);
