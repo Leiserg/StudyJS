@@ -2,7 +2,7 @@
 
 const seriesBooks = document.querySelectorAll('.books'),
     books = document.querySelectorAll('.book'),
-    book3 = document.querySelectorAll('a'),
+    book3 = document.querySelectorAll('#a'),
     advertisement = document.querySelector('.adv'),
     elementsBooks = document.querySelectorAll('ul'),
     elems = document.querySelectorAll('li');
