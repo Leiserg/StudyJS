@@ -1,13 +1,11 @@
-'use strict';
+// 'use strict';
 
-let periodSelect = document.querySelector('.period-select');
-let periodAmount = document.querySelector('.period-amount');
+// let start = document.getElementById('start'),
+//     salaryAmount = document.querySelector('.salary-amount');
+    
 
-let eventFunc = function(event){
-    // periodAmount.replaceWith(periodSelect.value);
-    periodAmount.innerHTML = periodSelect.value;
-    console.log(periodSelect.value);  
-};
 
-document.querySelector('.period-select').addEventListener('input', eventFunc);
+
+
+// document.getElementById('start').addEventListener('click', appData.getBlock);
 
