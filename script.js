@@ -135,7 +135,7 @@ let appData = {
                 appData.income[itemIncome] = cashIncome; 
             }
         });
-        for(let key in appData.income){
+        for(let key in this.income){
             this.incomeMonth += +this.income[key];
         }
     },
@@ -161,14 +161,14 @@ let appData = {
     },
  
     getExpensesMonth: function() {
-        for (let key in appData.expenses) {
+        for (let key in this.expenses) {
             this.expensesMonth += +this.expenses[key];
         }
     },
 
     getBudget: function() {
-        appData.budgetMonth = this.budget + this.incomeMonth - this.expensesMonth;
-        appData.budgetDay = Math.ceil(this.budgetMonth / 30);
+        this.budgetMonth = this.budget + this.incomeMonth - this.expensesMonth;
+        this.budgetDay = Math.ceil(this.budgetMonth / 30);
     },
 
     
@@ -194,13 +194,13 @@ let appData = {
 
     getInfoDeposit: function() {
         if (this.deposit) {
-            appData.percentDeposit = prompt('Какой годовой процент?', 10);
-            while (!isNumber(appData.percentDeposit)) {
-                appData.percentDeposit = prompt('Во сколько это обойдется?');
+            this.percentDeposit = prompt('Какой годовой процент?', 10);
+            while (!isNumber(this.percentDeposit)) {
+                this.percentDeposit = prompt('Во сколько это обойдется?');
             }
-            appData.moneyDeposit = prompt('Какая сумма заложена?', 10000);
-            while (!isNumber(appData.moneyDeposit)) {
-                appData.moneyDeposit = prompt('Во сколько это обойдется?');
+            this.moneyDeposit = prompt('Какая сумма заложена?', 10000);
+            while (!isNumber(this.moneyDeposit)) {
+                this.moneyDeposit = prompt('Во сколько это обойдется?');
             }
         }
     },
