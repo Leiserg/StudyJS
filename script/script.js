@@ -7,6 +7,7 @@ const todoControl = document.querySelector('.todo-control'),
     headerButton = document.querySelector('.header-button');
 
 let todoData = [];
+    todoData = JSON.parse(localStorage.getItem("todoData"));
 
 const render = function(){
     todoList.textContent = '';
@@ -58,6 +59,6 @@ todoControl.addEventListener('submit', function(event){
     render();
 });
 
-todoData = JSON.parse(localStorage.getItem("todoData"));
+
 render();
  
