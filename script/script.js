@@ -6,8 +6,7 @@ const todoControl = document.querySelector('.todo-control'),
     todoCompleted = document.querySelector('.todo-completed'),
     headerButton = document.querySelector('.header-button');
 
-let todoData = [];
-    todoData = JSON.parse(localStorage.getItem("todoData"));
+const todoData = JSON.parse(localStorage.getItem('todoData')) || [];
 
 const render = function(){
     todoList.textContent = '';
@@ -23,7 +22,6 @@ const render = function(){
                 '<button class="todo-remove"></button>' + 
                 '<button class="todo-complete"></button>' + 
             '</div>';
-        
         if (item.completed){
             todoCompleted.append(li);
         } else {
@@ -58,7 +56,6 @@ todoControl.addEventListener('submit', function(event){
     }
     render();
 });
-
 
 render();
  
