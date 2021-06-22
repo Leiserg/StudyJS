@@ -1,68 +1,54 @@
 'use strict';
 
-let money = +prompt('Ваш месячный доход?', '50000');
-let income = 'Подработка';
-let addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую', 'Квартплата, кредит'); 
-let deposit = confirm('Есть ли у вас депозит в банке?');
-let mission = 300000; 
-let period = 6;
 
-let showTypeOf = function(data) {
-    console.log(data, typeof(data));
-};
-
-showTypeOf(money);
-showTypeOf(income);
-showTypeOf(deposit);
-
-
-// console.log(addExpenses.length);
-// console.log('Период равен', (period), 'месяцев');
-// console.log('Цель заработать', (mission), 'рублей');
-// console.log(addExpenses.toLowerCase());
-
-let arr = addExpenses.split(', ');
-console.log(arr);
-
-let expenses1 = prompt('Введите обязательную статью расходов?', 'Квартплата');
-let amount1 = +prompt('Во сколько это обойдется?', '5000');
-let expenses2 = prompt('Введите обязательную статью расходов?', 'Кредит');
-let amount2 = +prompt('Во сколько это обойдется?', '10000');
+// let selector = '.start';
+// if (selector[0] === '.'){
+//         const div = document.createElement('div');
+//         let style = getComputedStyle(div);
+//         let heigh = style.height;
+//         div.className = selector.slice(1);
+//         div.style.cssText = 'height: height; width: 300px; background: blue; font-size: 50px;';
+//         div.innerHTML = "Some text with bold text";
+//         document.body.appendChild(div);
+//         console.log(div);
+//         // console.log(style);
+//         console.log(heigh.height);
+//     } else if(selector[0] === '#'){
+//         const p = document.createElement('p');
+//         p.id = selector.slice(1);
+//         p.innerHTML = "Some text with <b>bold text</b>";
+//         document.body.appendChild(p);
+//         console.log(p);
+//     }
 
 
-let getExpensesMonth = function() {
-    return amount1 + amount2;
-};
-console.log('Расходы за месяц: ', getExpensesMonth());
-
-
-function getAccumulatedMonth() {
-    return money - getExpensesMonth();
-}
-let accumulatedMonth = getAccumulatedMonth();
-
-
-function getTargetMonth() {
-    return mission / accumulatedMonth;
-}
-console.log('Цель будет достигнута за', Math.ceil(getTargetMonth()), 'месяцев(-a)');
-
-
-let budgetDay = accumulatedMonth / 30;
-console.log('Бюджет на день', Math.floor(budgetDay));
-
-
-let getStatusIncome = function() {
-    if(budgetDay > 1200) {
-        console.log('У вас высокий уровень дохода');
-    } else if(budgetDay >= 600 && budgetDay <= 1200) {
-        console.log('У вас средний уровень дохода');
-    } else if(budgetDay > 0 && budgetDay > 600) {
-        console.log('К сожалению у вас уровень дохода ниже среднего');
-    }else {
-        console.log('Что-то пошло не так');
+class DomElement {
+    constructor (selector, height, width, bg, fontSize){
+        this.selector = selector;
+        this.height = height;
+        this.width = width;
+        this.bg = bg;
+        this.fontSize = fontSize;
     }
-};
+    method1(){
+        if (this.selector[0] === '.'){
+            const div = document.createElement('div');
+            div.className = this.selector.slice(1);
+            div.innerHTML = "Some text with <b>bold text</b>";
+            div.style.cssText = 'height: height; width: width; background: bg; fontSize: fontSize;';
+            document.body.appendChild(div);
+            console.log(div);
+        } else if(this.selector[0] === '#'){
+            const p = document.createElement('p');
+            p.id = this.selector.slice(1);
+            p.innerHTML = "Some text with <b>bold text</b>";
+            document.body.appendChild(p);
+            console.log(p);
+        }        
+    }
+}
 
-getStatusIncome();
 
+let car1 = new DomElement('.start', 100, '2000px', 'red', 50);
+
+console.log(car1);
