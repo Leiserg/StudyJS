@@ -2,7 +2,7 @@
 
 
 let startBtn = document.getElementById('start'),
-    canselBtn = document.getElementById('cancel'),
+    cancelBtn = document.getElementById('cancel'),
     btnPlus = document.getElementsByTagName('button'),
     incomePlus = btnPlus[0],
     expensesPlus = btnPlus[1],
@@ -56,20 +56,16 @@ console.log(this);
 
 AppData.prototype.start = function() {
 
-    let allInput = document.querySelectorAll('.input[type = text]');
+    let allInput = document.querySelectorAll('.data input[type = text]');
     allInput.forEach(function(item){
         item.setAttribute('disabled', 'true');
     });
     incomePlus.setAttribute('disabled', 'true');
     expensesPlus.setAttribute('disabled', 'true');
     startBtn.style.display = 'none';
-    canselBtn.style.display = 'block';
-    
-    console.log(this);
+    cancelBtn.style.display = 'block';
+
     this.budget = +salaryAmount.value;
-    console.log('salaryAmount: ', salaryAmount.value);
-
-
     this.getExpenses();  
     this.getIncome();
     this.getExpensesMonth();
@@ -79,6 +75,7 @@ AppData.prototype.start = function() {
     this.getInfoDeposit();
     this.getStatusIncome();
     this.showResult();
+
 
 };
 AppData.prototype.newStart = function(){
@@ -236,6 +233,28 @@ AppData.prototype.reset = function(){
         incomeItems[i].parentNode.removeChild(incomeItems[i]);
         incomePlus.style.display = 'block';
     }
+
+    this.budget = 0;
+    this.budgetDay = 0;
+    this.budgetMonth = 0;
+    this.income = {};
+    this.incomeMonth = 0;
+    this.addIncome = [];
+    this.expenses = {};
+    this.expensesMonth = 0;
+    this.addExpenses = [];
+    this.deposit = false;
+    this.percentDeposit = 0;
+    this.moneyDeposit = 0;
+    this.period = 0;
+    
+    cancelBtn.style.display = 'none';
+    startBtn.style.display = 'block';
+    incomePlus.removeAttribute('disabled');
+    expensesPlus.removeAttribute('disabled');
+    checkbox.checked = false;
+
+
 };
 
 AppData.prototype.eventListeners = function(){
@@ -248,7 +267,7 @@ AppData.prototype.eventListeners = function(){
     incomePlus.addEventListener('click', appData.addIncomeBlock);
     expensesPlus.addEventListener('click', appData.addExpensesBlock);
     periodSelect.addEventListener('input', appData.eventFunc);
-    canselBtn.addEventListener('click', appData.reset.bind(appData));
+    cancelBtn.addEventListener('click', appData.reset.bind(appData));
 };
 
 AppData.prototype.eventListeners();
