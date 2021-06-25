@@ -31,7 +31,7 @@ let startBtn = document.getElementById('start'),
     depositBank = document.querySelector('.deposit-bank'),
     depositAmount = document.querySelector('.deposit-amount'),
     depositPercent = document.querySelector('.deposit-percent');
- 
+    console.log(depositPercent.value);
 class AppData {
     constructor() {
         this.budget = 0;
@@ -73,8 +73,6 @@ class AppData {
         this.getBudget();
         // this.getStatusIncome();
         this.showResult();
-        console.log(this.percentDeposit);
-        console.log(this.moneyDeposit);
     }
 
     newStart(){
@@ -83,7 +81,6 @@ class AppData {
     }
 
     getBlock(){
-        
             if (salaryAmount.value === '' || isNaN(salaryAmount.value) || salaryAmount.value == 0){
                 startBtn.disabled = true;
             } else {
@@ -183,7 +180,6 @@ class AppData {
         const monthDeposit = this.moneyDeposit * (this.percentDeposit / 100);
         this.budgetMonth = this.budget + this.incomeMonth - this.expensesMonth + monthDeposit;
         this.budgetDay = Math.ceil(this.budgetMonth / 30);
-        console.log(this.moneyDeposit);
     }
 
     getTargetMonth(){
@@ -233,19 +229,19 @@ class AppData {
             expensesPlus.style.display = 'block';
         }
 
-        // this.budget = 0;
-        // this.budgetDay = 0;
-        // this.budgetMonth = 0;
-        // this.income = {};
-        // this.incomeMonth = 0;
-        // this.addIncome = [];
-        // this.expenses = {};
-        // this.expensesMonth = 0;
-        // this.addExpenses = [];
-        // this.deposit = false;
-        // this.percentDeposit = 0;
-        // this.moneyDeposit = 0;
-        // this.period = 0;
+        this.budget = 0;
+        this.budgetDay = 0;
+        this.budgetMonth = 0;
+        this.income = {};
+        this.incomeMonth = 0;
+        this.addIncome = [];
+        this.expenses = {};
+        this.expensesMonth = 0;
+        this.addExpenses = [];
+        this.deposit = false;
+        this.percentDeposit = 0;
+        this.moneyDeposit = 0;
+        this.period = 0;
         
         cancelBtn.style.display = 'none';
         startBtn.style.display = 'block';
@@ -254,21 +250,29 @@ class AppData {
         depositChek.checked = false;
     }
     getInfoDeposit() {
-        const _this = this;
         if (this.deposit) {
             this.percentDeposit = depositPercent.value;
             this.moneyDeposit = depositAmount.value;
-
         }
     }
-    // changePercend() {
-    //     const valueSelect = this.value;
-    //     if (valueSelect === 'other'){
-    //         //Ljvfiytt
-    //     } else {
-    //         depositPercent.value = valueSelect;
-    //     }
-    // }
+
+    changePercend() {
+        const valueSelect = this.value;
+        if (valueSelect === 'other'){
+            depositPercent.style.display = 'inline-block';
+            depositBank.value = '';
+            depositBank.addEventListener('change', this.depositPercent);
+        } 
+        else {
+            depositPercent.style.display = 'none';
+            depositPercent.value = valueSelect;
+            depositBank.removeEventListener('change', this.depositPercent);
+        }
+        if (valueSelect === 0) {
+            alert("Введите корректное значение в поле проценты");
+        }
+    }
+
     
     depositHandler(){
         if (depositChek.checked) {
@@ -279,10 +283,10 @@ class AppData {
         }else {
             depositBank.style.display = 'none';
             depositAmount.style.display = 'none';
-            depositBank.value = '';
             depositAmount.value = '';
+            depositPercent.value = '';
             this.deposit = false;
-            depositBank.removeEventListener('change', this.cangePercend);
+            depositBank.removeEventListener('change', this.changePercend);
         }
 
     }
@@ -299,15 +303,9 @@ class AppData {
         expensesPlus.addEventListener('click', appData.addExpensesBlock);
         periodSelect.addEventListener('input', appData.eventFunc);
         cancelBtn.addEventListener('click', appData.reset.bind(appData));
-        depositChek.addEventListener('change', this.depositHandler.bind(this));
+        depositChek.addEventListener('change', appData.depositHandler.bind(appData));
     }
 }
 
 const test1 = new AppData();
 test1.eventListeners();
-
-
-
-
-
-
