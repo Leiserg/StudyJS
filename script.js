@@ -207,11 +207,11 @@ class AppData {
     getInfoDeposit() {
         if (this.deposit) {
             this.percentDeposit = prompt('Какой годовой процент?', 10);
-            while (!isNumber(this.percentDeposit)) {
+            while (!this.isNumber(this.percentDeposit)) {
                 this.percentDeposit = prompt('Во сколько это обойдется?');
             }
             this.moneyDeposit = prompt('Какая сумма заложена?', 10000);
-            while (!isNumber(this.moneyDeposit)) {
+            while (!this.isNumber(this.moneyDeposit)) {
                 this.moneyDeposit = prompt('Во сколько это обойдется?');
             }
         }
@@ -239,6 +239,11 @@ class AppData {
             incomeItems[i].parentNode.removeChild(incomeItems[i]);
             incomePlus.style.display = 'block';
         }
+        for (let i = 1; i < expensesItems.length; i++){
+            expensesItems[i].parentNode.removeChild(expensesItems[i]);
+            expensesPlus.style.display = 'block';
+        }
+
 
         this.budget = 0;
         this.budgetDay = 0;
