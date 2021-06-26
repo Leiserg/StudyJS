@@ -31,7 +31,7 @@ let startBtn = document.getElementById('start'),
     depositBank = document.querySelector('.deposit-bank'),
     depositAmount = document.querySelector('.deposit-amount'),
     depositPercent = document.querySelector('.deposit-percent');
-    console.log(depositPercent.value);
+
 class AppData {
     constructor() {
         this.budget = 0;
@@ -62,7 +62,6 @@ class AppData {
         expensesPlus.setAttribute('disabled', 'true');
         startBtn.style.display = 'none';
         cancelBtn.style.display = 'block';
-
         this.budget = +salaryAmount.value;
         this.getIncome();
         this.getExpenses();  
@@ -83,6 +82,17 @@ class AppData {
     getBlock(){
             if (salaryAmount.value === '' || isNaN(salaryAmount.value) || salaryAmount.value == 0){
                 startBtn.disabled = true;
+            } else {
+                startBtn.disabled = false;
+            }
+    }
+
+    getBlock2(){
+            if (depositPercent.value === ' ' || isNaN(depositPercent.value) || depositPercent.value <= 0 || depositPercent.value >= 100){
+                alert('Введите корректное значение в поле проценты');
+                depositPercent.value = '';
+                startBtn.disabled = true;
+
             } else {
                 startBtn.disabled = false;
             }
@@ -295,9 +305,11 @@ class AppData {
     eventListeners(){
         const appData = new AppData();
 
-        startBtn.disabled = true;
+        startBtn.disabled = true; 
+
         startBtn.addEventListener('click', appData.start.bind(appData));
-        
+            
+        depositPercent.addEventListener('input', appData.getBlock2);
         salaryAmount.addEventListener('input', appData.getBlock);
         incomePlus.addEventListener('click', appData.addIncomeBlock);
         expensesPlus.addEventListener('click', appData.addExpensesBlock);
