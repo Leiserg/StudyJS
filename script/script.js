@@ -16,9 +16,6 @@ window.addEventListener('DOMContentLoaded', function(){
                 seconds = Math.floor(timeRemaining % 60),
                 minutes = Math.floor((timeRemaining /60) % 60),
                 hours = Math.floor(timeRemaining / 60 / 60);
-                // if (hours < 10) {
-                //     timerHours.innerHTML = '0' + hours;
-                // }
                 return {timeRemaining, hours, minutes, seconds};
         }
 
@@ -42,20 +39,21 @@ window.addEventListener('DOMContentLoaded', function(){
             if(timer.seconds < 10) {
                 timerSecond.innerHTML = '0' + timer.seconds;
             }
-
-            if (timer.timeRemaining > 0){
-                setInterval (updateClock, 1000);
-            }           
-                 else if (timer.timeRemaining <= 0){
-                    clearInterval(countTimer); 
-                    timerHours.innerHTML = '00';
-                    timerMinutes.innerHTML = '00';
-                    timerSecond.innerHTML = '00';
-            }
         }
 
+        
+        let time = getTimeRemaining();
+        if (time.timeRemaining > 0){
+            setInterval (updateClock, 1000);
+        }else if (time.timeRemaining <= 0){
+            clearInterval(countTimer); 
+            timerHours.innerHTML = '00';
+            timerMinutes.innerHTML = '00';
+            timerSecond.innerHTML = '00';
+        } 
         updateClock();
     }
-    countTimer('27 juny 2021');
+
+    countTimer('29 juny 2021');
 });
 
