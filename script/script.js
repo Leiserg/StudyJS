@@ -16,6 +16,9 @@ window.addEventListener('DOMContentLoaded', function(){
                 seconds = Math.floor(timeRemaining % 60),
                 minutes = Math.floor((timeRemaining /60) % 60),
                 hours = Math.floor(timeRemaining / 60 / 60);
+                // if (hours < 10) {
+                //     timerHours.innerHTML = '0' + hours;
+                // }
                 return {timeRemaining, hours, minutes, seconds};
         }
 
@@ -26,8 +29,6 @@ window.addEventListener('DOMContentLoaded', function(){
             timerHours.textContent = timer.hours;
             timerMinutes.textContent = timer.minutes;
             timerSecond.textContent = timer.seconds;
-        
-
             if (timer.hours < 10){
                 timerHours.innerHTML = '0' + timer.hours;
             }
@@ -41,7 +42,7 @@ window.addEventListener('DOMContentLoaded', function(){
             }
         }
 
-        
+
         let time = getTimeRemaining();
         if (time.timeRemaining > 0){
             setInterval (updateClock, 1000);
@@ -50,10 +51,87 @@ window.addEventListener('DOMContentLoaded', function(){
             timerHours.innerHTML = '00';
             timerMinutes.innerHTML = '00';
             timerSecond.innerHTML = '00';
-        } 
+        }
         updateClock();
     }
-
     countTimer('29 juny 2021');
+
+    //Меню
+    const toggleMenu = () => {
+        const btnMenu = document.querySelector('.menu'),
+            menu = document.querySelector('menu'),
+            closeBtn = document.querySelector('.close-btn'),
+            menuItems = menu.querySelectorAll('ul>li');
+
+            const handlerMenu = () => {
+                menu.classList.toggle('active-menu');
+
+                // if(!menu.style.transform || menu.style.transform === `translate(-100%)`){
+                //     menu.style.transform = `translate(0)`;
+                // }else {
+                //     menu.style.transform = `translate(-100%)`;
+                // }
+            };
+
+            btnMenu.addEventListener('click', handlerMenu);
+            closeBtn.addEventListener('click', handlerMenu);
+            menuItems.forEach((elem) => elem.addEventListener('click', handlerMenu));
+    };
+
+    toggleMenu();
+
+
+    // PopUp
+
+    const togglePopup = () => {
+        let popup = document.querySelector('.popup'),
+        popupBtn = document.querySelectorAll('.popup-btn'),
+        popUpclose = document.querySelector('.popup-close'),
+        popupContent = document.querySelector('.popup-content');
+        let count = 0;
+
+        let popUpDown = function (){
+            count++;
+            popupContent.style.top = count * 5 + 'px';
+            if (count < 40){
+                setTimeout(popUpDown, 1);
+            }
+        };
+
+        popupBtn.forEach((elem) => {
+            elem.addEventListener('click', () => {
+                popup.style.display = 'block';
+                popup.style.position = 'relative';
+                popUpDown();
+            });      
+        });
+
+        popUpclose.addEventListener('click', () => {
+            popup.style.display = 'none';
+            popup.style.position = 'fixed';
+            count = 0;
+        });
+    };
+
+    togglePopup(); 
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 });
 
