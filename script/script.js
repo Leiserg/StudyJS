@@ -102,7 +102,12 @@ window.addEventListener('DOMContentLoaded', function(){
             elem.addEventListener('click', () => {
                 popup.style.display = 'block';
                 popup.style.position = 'relative';
-                popUpDown();
+                const width = document.documentElement.clientWidth;
+                if (width > 768){
+                    popUpDown();
+                } else {
+                    return;
+                }
             });      
         });
 
