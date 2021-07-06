@@ -51,23 +51,25 @@ window.addEventListener('DOMContentLoaded', function(){
             setInterval (updateClock, 1000);
         }
 
+        
         updateClock();
     }
 
-    countTimer('09 july 2021');
+    countTimer('06 july 2021');
 
     //Меню
-    const body = document.querySelector('body');
-
     const toggleMenu = () => {
         const btnMenu = document.querySelector('.menu'),
             menu = document.querySelector('menu'),
             closeBtn = document.querySelector('.close-btn'),
-            menuItems = menu.querySelectorAll('ul>li');
-
+            menuItems = menu.querySelectorAll('ul>li'),
+            body = document.querySelectorAll('body');
+            console.log(body);
             const handlerMenu = () => {
                 menu.classList.toggle('active-menu');
             };
+
+
 
             document.addEventListener('click', (event) => {
                 let target = event.target;
@@ -79,6 +81,8 @@ window.addEventListener('DOMContentLoaded', function(){
             });
                 
             btnMenu.addEventListener('click', handlerMenu);
+            // closeBtn.addEventListener('click', handlerMenu);
+            // menuItems.forEach((elem) => elem.addEventListener('click', handlerMenu));
     };
 
     toggleMenu();
@@ -91,16 +95,37 @@ window.addEventListener('DOMContentLoaded', function(){
         popupBtn = document.querySelectorAll('.popup-btn'),
         popUpclose = document.querySelector('.popup-close'),
         popupContent = document.querySelector('.popup-content');
-    
+        // let count = 0;
+
+    // let popupDownInterval;
+    // let popupDown = function (){
+    //     popupDownInterval = requestAnimationFrame(popupDown);
+    //     count++;
+    //     if(count < 200) {
+    //         popupContent.style.top = count + 'px';  
+    //     } 
+    //     else {
+    //         cancelAnimationFrame(popupDownInterval);
+    //     }
+    //     // popupDown();
+    //     // popupContent.style.top = count + 'px';
+    // };
+    // document.addEventListener('click', function(){
+    // popupDownInterval = requestAnimationFrame(popupDown);});
+
         popupBtn.forEach((elem) => {
             elem.addEventListener('click', () => {
                 popup.style.display = 'block';
+                // popup.style.position = 'relative';         
+                // popupDownInterval = requestAnimationFrame(popupDown);
             });      
         });
 
-
+        // popupDown();
         popUpclose.addEventListener('click', () => {
             popup.style.display = 'none';
+            // popup.style.position = 'fixed'; 
+            // cancelAnimationFrame(popupDownInterval);
         });
 
         popup.addEventListener('click', (event) => {
@@ -264,132 +289,19 @@ window.addEventListener('DOMContentLoaded', function(){
 
     slider();
 
-    const calc = (price = 100) => {
-        const calcBlock = document.querySelector('.calc-block'),
-            calcType = document.querySelector('.calc-type'),
-            calcSquare = document.querySelector('.calc-square'),
-            calcDay = document.querySelector('.calc-day'),
-            calcCount = document.querySelector('.calc-count'),
-            totalValue = document.getElementById('total');
-        
-        const countSum = () => {
-            let total = 0,
-            countValue = 1,
-            dayValue = 1;
-            const typeValue = calcType.options[calcType.selectedIndex].value,
-                squareValue = +calcSquare.value; 
-
-            if (calcCount.value > 1){
-                countValue += (calcCount.value - 1) / 10;
-            }
-
-            if (calcDay.value && calcDay.value < 5){
-                dayValue *= 2;
-            }else if (calcDay.value && calcDay.value < 10){
-                dayValue *= 1.5;
-            }
-            
-            if (typeValue && squareValue){
-                total = price * typeValue * squareValue * countValue * dayValue;
-            }
-
-            totalValue.textContent = total;
-        }
-
-
-        calcBlock.addEventListener('change', (event) => {
-            const target = event.target;
-
-            if(target.matches('select') || target.matches('input')){
-                countSum();
-            }
-        });
-    };
-
-    calc(100); 
 
 
 
-    // Команда
-    const command = document.getElementById('command'),
-        calcBlock = document.querySelector('.calc-block');
-
-    command.addEventListener('mouseover', (element) => {
-    let target = element.target;
-
-    if (target.matches('.command__photo')) {
-        target.dataset.first = target.src;
-        target.src = target.dataset.img;
-    }
-    });
-
-    command.addEventListener('mouseout', (element) => {
-    let target = element.target;
-
-    if (target.matches('.command__photo')) {
-        target.src = target.dataset.first;
-        target.removeAttribute('data-first');
-    }
-    });
-
-    calcBlock.addEventListener('input', (element) => {
-    let target = element.target;
-
-    if (target.matches('INPUT')) {
-        target.value = target.value.replace(/\D/,'');
-    }
-    });
-
-    //Задания 
-    const form2 = document.getElementById('form2');
 
 
 
-    body.addEventListener('input', (element) => {
-    let target = element.target;
 
-    console.log(element.inputType);
-    if (element.inputType === 'insertFromPaste') {
-        target.value = '';
-        return;
-    }
-    
-    if (target.matches('#form2-name,#form2-message,#form1-name')) {
-        target.value = target.value.replace(/[^а-я\s\-]/i,'');
-    } else if (target.matches('#form2-email,#form1-email')) {
-        target.value = target.value.replace(/[^a-z\@\-\_\.\!\~\*\']/gi, '');
-        console.log(target.value);
-    } else if(target.matches('#form2-phone,#form1-phone')) {
-        target.value = target.value.replace(/[^\d\(\)\-]/i, '');
-    }
-    });
 
-    body.addEventListener('focusout', (e) => {
-    let target = e.target;
 
-    if (target.value) {
-        
-        if (target.matches('#form2-name,#form2-message,#form1-name')) {
-            target.value = target.value.replace(/^\s+|\s+$/g, '');
-            target.value = target.value.replace(/\s{2,}/g, ' ');
-        } else if (target.matches('#form2-email,#form1-email')) {
-            target.value = target.value.replace(/^\-+|\-+$/g, '');
-            target.value = target.value.replace(/\-{2,}/g, '-');
-            console.log(target.value);
-        } else if (target.matches('#form2-phone,#form1-phone')) {
-            target.value = target.value.replace(/^\-+|\-+$/g, '');
-            target.value = target.value.replace(/\-{2,}/g, '-');
-        }
-    
-        if (target.matches('#form2-name,#form1-name')) {
-            let str = target.value;
-            str = str.split(' ');
-            str.forEach((el, id) => str[id] = el[0].toUpperCase() + el.substring(1).toLowerCase());
-            str = str.join(' ');
-            target.value = str;
-        }
-    }
-    });
+
+
+
+
 
 
 });
