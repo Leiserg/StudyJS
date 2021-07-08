@@ -394,31 +394,16 @@ window.addEventListener('DOMContentLoaded', function(){
     //send-ajax-form
 
     const sendForm = () => {
-        const errorMessage  =  'Что-то пошщло не так...',
+        const errorMessage  =  'Что-то пошло не так...',
             loadMessage = 'Загрузка...',
             succesMessage = 'Спасибо! Мы скоро с Вами свяжемся!';
 
         const form1 = document.getElementById('form1');
-        const statusMessage = document.createElement('div');
-        statusMessage.textContent = loadMessage;
+        let statusMessage = document.createElement('div');
         form1.addEventListener('submit', (event) => {
             event.preventDefault(); 
             form1.appendChild(statusMessage);
-            const form1Data = new FormData(form1);
-            let body ={};
-            for (let val of form1Data.entries()){
-                body[val[0]] = val[1];
-            }
-            // form1Data.forEach((val, key) => {         // Альтернативный метод
-            //     body[key] = val;
-            // });
-            postData(body, () => {
-                statusMessage.textContent = succesMessage;
-            }, (error) => {
-                statusMessage.textContent = errorMessage;
-                console.error(error);   
-            });
-            event.target.reset(); 
+            getFormData(form1);
         });
 
         const form2 = document.getElementById('form2');
@@ -427,21 +412,9 @@ window.addEventListener('DOMContentLoaded', function(){
         form2.addEventListener('submit', (event) => {
             event.preventDefault(); 
             buttonForm3.style.display = 'none';
-            statusDescription.textContent = loadMessage;
+            statusMessage = statusDescription;
             form2.appendChild(statusDescription);
-            console.log(statusDescription);
-            const form2Data = new FormData(form2);
-            let body ={};
-            for (let val of form2Data.entries()){
-                body[val[0]] = val[1];
-            }
-            postData(body, () => {
-                statusDescription.textContent = succesMessage;
-            }, (error) => {
-                statusDescription.textContent = errorMessage;
-                console.error(error);   
-            });
-            event.target.reset(); 
+            getFormData(form2);
         });
 
 
@@ -449,42 +422,36 @@ window.addEventListener('DOMContentLoaded', function(){
         form3.addEventListener('submit', (event) => {
             event.preventDefault(); 
             const statusH3 = document.querySelector('h3');
-            statusH3.textContent = loadMessage;
-            const form3Data = new FormData(form3);
-            let body ={};
-            for (let val of form3Data.entries()){
-                body[val[0]] = val[1];
-            }
-            postData(body, () => {
-                statusH3.textContent = succesMessage;
-            }, (error) => {
-                statusH3.textContent = errorMessage;
-                console.error(error);   
-            });
-            event.target.reset(); 
+            statusMessage = statusH3;
+            getFormData(form3);            
         });
 
-        const postData = (body, outputData, errorData) => {
-            const request = new XMLHttpRequest();
-            request.addEventListener('readystatechange', () => {
-                if (request.readyState !== 4){
-                    return;
-                }
-                if (request.status === 200){
-                    outputData();
-                } else {
-                    errorData(request.status);
-                }
-            });
-
-            request.open('POST', './server.php');
-            request.setRequestHeader('Content-Type', 'application/json');
-            request.send(JSON.stringify(body));
+        const getFormData = (elem) => {
+            const formData = new FormData(elem);
+            statusMessage.textContent = loadMessage;
+            postData(formData)
+                .then((response) => {
+                    if (response.status !== 200){
+                        throw new Error ('Состояние сети не 200');
+                    }
+                    statusMessage.textContent = succesMessage;
+                })
+                .catch((error) => {
+                    statusMessage.textContent = errorMessage;
+                    console.error(error);   
+                });
+            event.target.reset(); 
         };
+
+        const postData = (formData) => {
+            return fetch('./server.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: formData
+            });
+         };
     };
-
     sendForm();
-
-
 });
-
