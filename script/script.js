@@ -58,11 +58,15 @@ window.addEventListener('DOMContentLoaded', function(){
     countTimer('06 july 2021');
 
     //Меню
+    const body = document.querySelector('body');
+
     const toggleMenu = () => {
         const btnMenu = document.querySelector('.menu'),
             menu = document.querySelector('menu'),
             closeBtn = document.querySelector('.close-btn'),
-            menuItems = menu.querySelectorAll('ul>li');
+            menuItems = menu.querySelectorAll('ul>li'),
+            img = btnMenu.querySelector('img'),
+            small = btnMenu.querySelector('small');
 
             const handlerMenu = () => {
                 menu.classList.toggle('active-menu');
@@ -70,18 +74,15 @@ window.addEventListener('DOMContentLoaded', function(){
 
             document.addEventListener('click', (event) => {
                 let target = event.target;
-                    target = target.closest('.close-btn');
-                    if(target === btnMenu){
+                console.log(event.target);
+                    if(target === btnMenu || target === img || target === small){
                         handlerMenu();
-                    }else 
-                    if(target === closeBtn){
+                    } else if(target === target.closest('.close-btn')){
                         handlerMenu();
                     }
+ 
+                menuItems.forEach((elem) => elem.addEventListener('click', handlerMenu));
             });
-
-            btnMenu.addEventListener('click', handlerMenu);
-            // closeBtn.addEventListener('click', handlerMenu);
-            menuItems.forEach((elem) => elem.addEventListener('click', handlerMenu));
     };
 
     toggleMenu();
