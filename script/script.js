@@ -63,7 +63,9 @@ window.addEventListener('DOMContentLoaded', function(){
         const btnMenu = document.querySelector('.menu'),
             menu = document.querySelector('menu'),
             closeBtn = document.querySelector('.close-btn'),
-            menuItems = menu.querySelectorAll('ul>li');
+            menuItems = menu.querySelectorAll('ul>li'),
+            img = btnMenu.querySelector('img'),
+            small = btnMenu.querySelector('small');
 
             const handlerMenu = () => {
                 menu.classList.toggle('active-menu');
@@ -71,14 +73,15 @@ window.addEventListener('DOMContentLoaded', function(){
 
             document.addEventListener('click', (event) => {
                 let target = event.target;
-                    target = target.closest('.close-btn');
-                console.log(target);
-                if(target === closeBtn || target === menuItems){
-                    handlerMenu();
-                }
+                console.log(event.target);
+                    if(target === btnMenu || target === img || target === small){
+                        handlerMenu();
+                    } else if(target === target.closest('.close-btn')){
+                        handlerMenu();
+                    }
+ 
+                menuItems.forEach((elem) => elem.addEventListener('click', handlerMenu));
             });
-                
-            btnMenu.addEventListener('click', handlerMenu);
     };
 
     toggleMenu();
@@ -160,7 +163,6 @@ window.addEventListener('DOMContentLoaded', function(){
             slider = document.querySelector('.portfolio-content'),
             portfolioDots = document.querySelector('.portfolio-dots');
             let dot = document.querySelectorAll('.dot');
-            console.log(slide.length);
 
         let currentSlide = 0,
             interval;
@@ -264,7 +266,10 @@ window.addEventListener('DOMContentLoaded', function(){
 
     slider();
 
-    const calc = (price = 100) => {
+
+    // Калькулятор
+
+    const calc = (price = 1) => {
         const calcBlock = document.querySelector('.calc-block'),
             calcType = document.querySelector('.calc-type'),
             calcSquare = document.querySelector('.calc-square'),
@@ -293,8 +298,8 @@ window.addEventListener('DOMContentLoaded', function(){
                 total = price * typeValue * squareValue * countValue * dayValue;
             }
 
-            totalValue.textContent = total;
-        }
+            totalValue.textContent = Math.ceil(total);
+        };
 
 
         calcBlock.addEventListener('change', (event) => {
@@ -306,7 +311,7 @@ window.addEventListener('DOMContentLoaded', function(){
         });
     };
 
-    calc(100); 
+    calc(4); 
 
 
 
@@ -348,7 +353,6 @@ window.addEventListener('DOMContentLoaded', function(){
     body.addEventListener('input', (element) => {
     let target = element.target;
 
-    console.log(element.inputType);
     if (element.inputType === 'insertFromPaste') {
         target.value = '';
         return;
@@ -358,7 +362,6 @@ window.addEventListener('DOMContentLoaded', function(){
         target.value = target.value.replace(/[^а-я\s\-]/i,'');
     } else if (target.matches('#form2-email,#form1-email')) {
         target.value = target.value.replace(/[^a-z\@\-\_\.\!\~\*\']/gi, '');
-        console.log(target.value);
     } else if(target.matches('#form2-phone,#form1-phone')) {
         target.value = target.value.replace(/[^\d\(\)\-]/i, '');
     }
@@ -375,7 +378,6 @@ window.addEventListener('DOMContentLoaded', function(){
         } else if (target.matches('#form2-email,#form1-email')) {
             target.value = target.value.replace(/^\-+|\-+$/g, '');
             target.value = target.value.replace(/\-{2,}/g, '-');
-            console.log(target.value);
         } else if (target.matches('#form2-phone,#form1-phone')) {
             target.value = target.value.replace(/^\-+|\-+$/g, '');
             target.value = target.value.replace(/\-{2,}/g, '-');
