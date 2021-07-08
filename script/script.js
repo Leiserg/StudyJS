@@ -399,11 +399,29 @@ window.addEventListener('DOMContentLoaded', function(){
             succesMessage = 'Спасибо! Мы скоро с Вами свяжемся!';
 
         const form1 = document.getElementById('form1');
-        let statusMessage = document.createElement('div');
+        const statusMessage = document.createElement('div');
         form1.addEventListener('submit', (event) => {
             event.preventDefault(); 
             form1.appendChild(statusMessage);
-            getFormData(form1);
+            const form1Data = new FormData(form1);
+            let body ={};
+            for (let val of form1Data.entries()){
+                body[val[0]] = val[1];
+            }
+            // form1Data.forEach((val, key) => {         // Альтернативный метод
+            //     body[key] = val;
+            // });
+            statusMessage.textContent = loadMessage;
+            postData(body)
+                .then(() => {
+                    statusMessage.textContent = succesMessage;
+                })
+                .catch((error) => {
+                    statusMessage.textContent = errorMessage;
+                    console.error(error);   
+                });
+            event.target.reset(); 
+            
         });
 
         const form2 = document.getElementById('form2');
@@ -412,9 +430,23 @@ window.addEventListener('DOMContentLoaded', function(){
         form2.addEventListener('submit', (event) => {
             event.preventDefault(); 
             buttonForm3.style.display = 'none';
-            statusMessage = statusDescription;
             form2.appendChild(statusDescription);
-            getFormData(form2);
+            const form2Data = new FormData(form2);
+            let body ={};
+            for (let val of form2Data.entries()){
+                body[val[0]] = val[1];
+            }
+            statusDescription.textContent = loadMessage; 
+            postData(body)
+                .then(() => {
+                    statusDescription.textContent = succesMessage;
+                })
+                .catch((error) => {
+                    statusDescription.textContent = errorMessage;
+                    console.error(error);   
+                });
+            event.target.reset(); 
+            
         });
 
 
@@ -422,36 +454,62 @@ window.addEventListener('DOMContentLoaded', function(){
         form3.addEventListener('submit', (event) => {
             event.preventDefault(); 
             const statusH3 = document.querySelector('h3');
-            statusMessage = statusH3;
-            getFormData(form3);            
-        });
 
-        const getFormData = (elem) => {
-            const formData = new FormData(elem);
-            statusMessage.textContent = loadMessage;
-            postData(formData)
-                .then((response) => {
-                    if (response.status !== 200){
-                        throw new Error ('Состояние сети не 200');
-                    }
-                    statusMessage.textContent = succesMessage;
+            const form3Data = new FormData(form3);
+            let body ={};
+            for (let val of form3Data.entries()){
+                body[val[0]] = val[1];
+            }
+            statusH3.textContent = loadMessage;
+            postData(body)
+                .then(() => {
+                    statusH3.textContent = succesMessage;
                 })
                 .catch((error) => {
-                    statusMessage.textContent = errorMessage;
+                    statusH3.textContent = errorMessage;
                     console.error(error);   
                 });
             event.target.reset(); 
-        };
+            
+        });
 
-        const postData = (formData) => {
-            return fetch('./server.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: formData
+        const postData = (body) => {
+            return new Promise ((resolve, reject) => {
+                const request = new XMLHttpRequest();
+                request.addEventListener('readystatechange', () => {
+                    if (request.readyState !== 4){
+                        return;
+                    }
+                    if (request.status === 200){
+                        resolve();
+                    } else {
+                        reject(request.statusText);
+                    }
+                });
+    
+                request.open('POST', './server.php');
+                request.setRequestHeader('Content-Type', 'application/json');
+                request.send(JSON.stringify(body));
             });
-         };
+
+
+            // const request = new XMLHttpRequest();
+            // request.addEventListener('readystatechange', () => {
+            //     if (request.readyState !== 4){
+            //         return;
+            //     }
+            //     if (request.status === 200){
+            //         outputData();
+            //     } else {
+            //         errorData(request.status);
+            //     }
+            // });
+
+            // request.open('POST', './server.php');
+            // request.setRequestHeader('Content-Type', 'application/json');
+            // request.send(JSON.stringify(body));
+        // };
+        };
     };
     sendForm();
 });
